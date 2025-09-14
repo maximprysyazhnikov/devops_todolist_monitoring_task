@@ -8,5 +8,8 @@ urlpatterns = [
     path("api/", include("api.urls")),
     path("api-auth/", include("rest_framework.urls")),
     path("admin/", admin.site.urls),
-    path("metrics", metrics_view),   # ← наш ендпоінт
+
+    # /metrics без редіректів + дубль зі слешем
+    path("metrics", metrics_view),
+    path("metrics/", metrics_view),
 ]
