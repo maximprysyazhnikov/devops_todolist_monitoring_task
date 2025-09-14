@@ -1,13 +1,12 @@
 global:
-  scrape_interval: 15s  # як часто опитувати цілі
+  scrape_interval: 15s
 
 scrape_configs:
-  # Django app (метрики з /metrics)
   - job_name: "django-todoapp"
     static_configs:
-      - targets: ["host.docker.internal:8000"]
+      - targets: ["todoapp:8000"]
+    metrics_path: /metrics
 
-  # Контейнерні метрики від cAdvisor
   - job_name: "cadvisor"
     static_configs:
       - targets: ["cadvisor:8080"]

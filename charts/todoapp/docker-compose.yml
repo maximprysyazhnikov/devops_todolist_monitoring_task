@@ -1,0 +1,10 @@
+  todoapp:
+    build: .
+    container_name: todoapp
+    environment:
+      - USE_SQLITE=1
+      - SECRET_KEY=dev-secret-change-me
+    ports:
+      - "8000:8000"
+    depends_on:
+      - cadvisor

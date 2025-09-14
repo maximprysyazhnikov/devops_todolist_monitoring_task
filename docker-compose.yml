@@ -1,6 +1,16 @@
-version: "3.8"
-
 services:
+  todoapp:
+    build:
+      context: ./src
+      dockerfile: Dockerfile
+    container_name: todoapp
+    environment:
+      - USE_SQLITE=1
+      - SECRET_KEY=dev-secret-change-me
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
+
   prometheus:
     image: prom/prometheus:latest
     container_name: prometheus
@@ -9,6 +19,8 @@ services:
       - "9090:9090"
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    depends_on:
+      - todoapp
 
   grafana:
     image: grafana/grafana:latest
@@ -33,5 +45,3 @@ services:
       - /var/run:/var/run:rw
       - /sys:/sys:ro
       - /var/lib/docker/:/var/lib/docker:ro
-      - /dev/disk/:/dev/disk:ro     # (необов’язково, але корисно)
-    # privileged: true              # розкоментуй, якщо в Docker Desktop будуть проблеми з доступом
